@@ -11,4 +11,4 @@ I used:
 + tailwind.css,
 + css-animation-sync
 
-if you have a suggestion please send me a message on [linkedin](https://www.linkedin.com/in/yusufabacik/, "Yusuf Abacık Linkedin") 
+if you have a suggestion please send me a message on [linkedin](https://www.linkedin.com/in/yusufabacik/ "Yusuf Abacık Linkedin") 
