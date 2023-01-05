@@ -1,5 +1,7 @@
 # Clicker Example With React.js
 
+[demo](https://nepcen.net/react-clicker)
+
 This is my first react.js project. 
 
 It's actually just a web page you can click on. The only difference is that you determine the duration of time you can click.
