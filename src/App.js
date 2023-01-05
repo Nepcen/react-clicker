@@ -59,7 +59,7 @@ function App() {
             onClick={() => {
               restart();
             }}
-            className="text-[30px] font-mono font-bold cursor-pointer"
+            className="text-[30px] font-mono font-bold cursor-pointer text-white"
           >
             Restart
           </span>
@@ -76,9 +76,9 @@ function App() {
           onClick={() => {
             startClicker();
           }}
-          className="flex-1 grow grid place-content-center select-none cursor-pointer text-[200px] font-mono font-bold font-outline-5 text-white "
+          className=" flex-1 grow grid place-content-center select-none cursor-pointer text-[200px] font-mono font-bold font-outline-5 text-black "
         >
-          Start
+          <span className="start">Start</span>
         </div>
       ) : (
         <Click clicked={clicked} count={count} />
