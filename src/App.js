@@ -69,7 +69,7 @@ function App() {
             onClick={() => {
               restart()
             }}
-            className="spanRestart text-[30px] font-mono font-bold cursor-pointer text-white"
+            className="animate-[rainbow-text-shadow_10s_linear_infinite] lg:text-[50px] md:text-[40px] text-[30px] font-mono font-bold cursor-pointer text-[#202020]"
           >
             Restart
           </span>
@@ -88,9 +88,9 @@ function App() {
           onClick={() => {
             startClicker()
           }}
-          className=" flex-1 grow grid place-content-center select-none cursor-pointer lg:text-[200px] md:text-[150px] min-[580px]:text-[130px] text-[75px] font-mono font-bold font-outline-5 text-black "
+          className=" flex-1 grow grid place-content-center select-none cursor-pointer lg:text-[200px] md:text-[150px] min-[580px]:text-[130px] text-[75px] font-mono font-bold font-outline-5 text-[#202020] "
         >
-          <span className="start">Start</span>
+          <span className="animate-[rainbow-text-shadow_10s_linear_infinite]">Start</span>
         </div>
       ) : (
         <Click clicked={clicked} count={count} />
