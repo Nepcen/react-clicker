@@ -5,7 +5,7 @@ function Toolbar(props) {
 
   return (
     <input
-      className="p-2 w-[100px] border-2 rounded-[10px] border-solid border-black focus:outline-none"
+      className="timeInput p-2 w-[100px] border-2 rounded-[10px] border-solid border-black focus:outline-none"
       type="number"
       onChange={changeTime}
       placeholder="Time"

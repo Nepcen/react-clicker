@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Click from "./Click";
 import "./tailwind.css";
+import Click from "./Click";
 import Timer from "./Timer";
 import Toolbar from "./Toolbar";
 
@@ -59,7 +59,7 @@ function App() {
             onClick={() => {
               restart();
             }}
-            className="text-[30px] font-mono font-bold cursor-pointer text-white"
+            className="spanRestart text-[30px] font-mono font-bold cursor-pointer text-white"
           >
             Restart
           </span>
@@ -71,12 +71,14 @@ function App() {
 
   return (
     <div className="flex flex-col w-full h-full ">
+      <div className="flex flex-row items-center justify-center w-full">
+      </div>
       {status === 0 ? (
         <div
           onClick={() => {
             startClicker();
           }}
-          className=" flex-1 grow grid place-content-center select-none cursor-pointer text-[200px] font-mono font-bold font-outline-5 text-black "
+          className=" flex-1 grow grid place-content-center select-none cursor-pointer lg:text-[200px] md:text-[150px] min-[580px]:text-[130px] text-[75px] font-mono font-bold font-outline-5 text-black "
         >
           <span className="start">Start</span>
         </div>
