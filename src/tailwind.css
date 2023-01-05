@@ -20,20 +20,6 @@
     z-index: 6;
   }
 
-  /*body::after{
-    position: absolute;
-    top: -60px;
-    left: -60px;
-    content: "";
-    width: calc(100% + 120px);
-    border: 50px solid red;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    height: 100vh;
-    z-index: -1;
-  }*/
-
   #root {
     height: 100%;
     background-color: rgb(32, 32, 32);
@@ -58,12 +44,15 @@
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
-    animation: rainbow-border 10s linear;
-    animation-iteration-count: infinite;
+    animation: rainbow-border 10s linear infinite;
     text-align: center;
     appearance: textfield;
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
+  }
+  
+  .up-and-down{
+    animation: rainbow-border 10s linear infinite, up-and-down .5s linear infinite;
   }
 
   .timeInput::placeholder{
@@ -76,6 +65,15 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     margin: 0;
+  }
+
+  @keyframes up-and-down{
+    0%, 50%, 100%{
+      transform: translateY(0px);
+    }
+    25%, 75%{
+      transform: translateY(-10px);
+    }
   }
 
   @keyframes rainbow-text-shadow {
@@ -217,7 +215,6 @@
       border-color: rgb(255, 0, 127);
     }
   }
-
   
   @keyframes rainbow-box-shadow {
     100%,
