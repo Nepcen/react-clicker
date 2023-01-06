@@ -52,8 +52,17 @@
     animation-iteration-count: infinite;
   }
   
+  .spanTimer{
+    animation: rainbow-text-shadow 10s linear infinite;
+  }
+  
+  .lastTen{
+    animation: last-ten 1s linear infinite, rainbow-text-shadow 10s linear infinite !important;
+  }
+
   .up-and-down{
-    animation: rainbow-border 10s linear infinite, up-and-down .5s linear infinite;
+    transform-origin: center;
+    animation: rainbow-border 10s linear infinite, up-and-down .5s linear infinite !important;
   }
 
   .timeInput::-webkit-outer-spin-button,
@@ -63,13 +72,26 @@
     -moz-appearance: none;
     margin: 0;
   }
+  
+  @keyframes last-ten{
+    0%, 100%{
+      transform: translateY(0px);
+      scale: 1;
+    }
+    50%{
+      transform: translateY(-10px);
+      scale: 1.1;
+    }
+  }
 
   @keyframes up-and-down{
     0%, 50%, 100%{
-      transform: translateY(0px);
+      transform-origin: 50px 22px;
+      transform: translateY(0px) rotate(0deg);
     }
     25%, 75%{
-      transform: translateY(-10px);
+      transform-origin: 50px 22px;
+      transform: translateY(-10px) rotate(-10deg);
     }
   }
 

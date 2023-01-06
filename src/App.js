@@ -1,52 +1,85 @@
-import { useEffect, useRef, useState } from "react";
-import sync from 'css-animation-sync';
-import "./tailwind.css";
-import Click from "./Click";
-import Timer from "./Timer";
-import Toolbar from "./Toolbar";
+import { useEffect, useRef, useState } from "react"
+import { syncEffects } from "./utils"
+import "./tailwind.css"
+import Click from "./Click"
+import Timer from "./Timer"
+import Toolbar from "./Toolbar"
 
 function App() {
   const [status, setStatus] = useState(0)
-  const [time, setTime] = useState(0)
+  const [time, setTime] = useState(localStorage.getItem("lastTime") || 0)
   const [count, setCount] = useState(0)
   const inputRef = useRef()
+  const timerRef = useRef()
   var timerInterval
 
-  const startClicker = () => {
-    if (time > 0) setStatus(1)
-    else{
-      inputRef.current.focus()
-      inputRef.current.classList.add("up-and-down")
-      setTimeout(() => {
-        inputRef.current.classList.remove("up-and-down")
-      }
-      , 500);
+  var scores = JSON.parse(localStorage?.getItem("highScores"));
+  var cScore = scores?.filter((el) => {
+    return el.time == localStorage?.getItem("lastTime");
+  })[0];
 
+
+  const updateHighScore = () => {
+    scores = scores.map((sc) => {
+      if (sc.time == localStorage.getItem("lastTime")) {
+        sc.score = count;
+      }
+      return sc;
+    });
+
+    localStorage.setItem("highScores", JSON.stringify(scores));
+  };
+
+  const startClicker = () => {
+    if (time > 0 || localStorage.getItem("lastTime") > 0) {
+      if(!localStorage.getItem("highScores"))
+        localStorage.setItem("highScores", JSON.stringify([]));
+      setTime(localStorage.getItem("lastTime"));
+      setCount(count + 1);
+      setStatus(1);
+    } else {
+      inputRef.current.focus();
+      inputRef.current.classList.add("up-and-down");
+      setTimeout(() => {
+        inputRef.current.classList.remove("up-and-down");
+      }, 500);
     }
   };
 
   useEffect(() => {
     if (status === 1) {
-      sync("rainbow-text-shadow")
-      sync("rainbow-border")
-      sync("rainbow-box-shadow")
       timerInterval = setInterval(() => {
+        syncEffects();
         setTime((prevTime) => prevTime - 1);
       }, 1000);
 
       return () => clearInterval(timerInterval);
     }
-  }, [status, timerInterval])
+  },[status]);
 
   useEffect(() => {
     if (time === 0 && status === 1) {
+      if (!cScore) {
+        scores?.push({
+          "time" : parseInt(localStorage?.getItem("lastTime")),
+          "score" : count,
+        });
+
+        localStorage.setItem("highScores", JSON.stringify(scores));
+      } else if (cScore.score < count) {
+        updateHighScore();
+      }
+
       setStatus(2);
     }
-  }, [time, status, setStatus])
+  });
 
   const clicked = () => {
     if (status === 1) {
-      setCount(count + 1)
+      setCount(count + 1);
+      if (cScore?.score < count) {
+        updateHighScore();
+      }
     }
   };
 
@@ -54,20 +87,20 @@ function App() {
     setStatus(0);
     setTime(0);
     setCount(0);
-    clearInterval(timerInterval)
+    clearInterval(timerInterval);
   };
 
   const renderBottom = () => {
     switch (status) {
       case 0:
-        return <Toolbar inputRef={inputRef} setTime={setTime} />
+        return <Toolbar inputRef={inputRef} setTime={setTime} />;
       case 1:
-        return <Timer time={time} />
+        return <Timer time={time} timerRef={timerRef} />;
       case 2:
         return (
           <span
             onClick={() => {
-              restart()
+              restart();
             }}
             className="animate-[rainbow-text-shadow_10s_linear_infinite] lg:text-[50px] md:text-[40px] text-[30px] font-mono font-bold cursor-pointer text-[#202020]"
           >
@@ -75,22 +108,34 @@ function App() {
           </span>
         );
       default:
-        return "Something went wrong"
+        return "Something went wrong";
     }
   };
 
   return (
     <div className="flex flex-col w-full h-full ">
-      <div className="flex flex-row items-center justify-center w-full">
-      </div>
+      {cScore ? (
+        <div className=" flex flex-col items-center justify-center w-full animate-[rainbow-text-shadow_10s_linear_infinite] lg:text-[50px] md:text-[40px]  min-[375px]:text-[25px] text-[20px] font-mono font-bold cursor-pointer text-[#202020]">
+          <span className=" ">High Score of {cScore.time}s </span>
+          <span>{cScore.score}</span>
+        </div>
+      ) : (
+        <div className=" invisible flex flex-col items-center justify-center w-full animate-[rainbow-text-shadow_10s_linear_infinite] lg:text-[50px] md:text-[40px] text-[30px] font-mono font-bold cursor-pointer text-[#202020]">
+          <span>Best Score of s </span>
+          <span>10</span>
+        </div>
+      )}
+      <div className="flex flex-row items-center justify-center w-full"></div>
       {status === 0 ? (
         <div
           onClick={() => {
-            startClicker()
+            startClicker();
           }}
           className=" flex-1 grow grid place-content-center select-none cursor-pointer lg:text-[200px] md:text-[150px] min-[580px]:text-[130px] text-[75px] font-mono font-bold font-outline-5 text-[#202020] "
         >
-          <span className="animate-[rainbow-text-shadow_10s_linear_infinite]">Start</span>
+          <span className="animate-[rainbow-text-shadow_10s_linear_infinite]">
+            Start
+          </span>
         </div>
       ) : (
         <Click clicked={clicked} count={count} />
