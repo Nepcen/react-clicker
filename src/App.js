@@ -15,7 +15,7 @@ function App() {
 
   var scores = JSON.parse(localStorage?.getItem("highScores"));
   var cScore = scores?.filter((el) => {
-    return el.time == localStorage?.getItem("lastTime");
+    return el.time === localStorage?.getItem("lastTime");
   })[0];
 
   const startClicker = () => {
@@ -26,21 +26,20 @@ function App() {
       setTime(localStorage.getItem("lastTime"));
       setCount(count + 1);
       setStatus(1);
-
     } else {
       inputRef.current.focus();
       inputRef.current.classList.add("up-and-down");
-      
+
       setTimeout(() => {
         inputRef.current.classList.remove("up-and-down");
       }, 500);
-      
     }
   };
 
   useEffect(() => {
     syncEffects();
     if (status === 1) {
+      // eslint-disable-next-line
       timerInterval = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
@@ -48,10 +47,11 @@ function App() {
       return () => clearInterval(timerInterval);
     }
   }, [status]);
-
+  
+  // eslint-disable-next-line
   useEffect(() => {
     syncEffects();
-    
+
     if (time === 0 && status === 1) {
       timerRef.current.classList.remove("lastTen");
       if (!cScore) {
@@ -68,9 +68,9 @@ function App() {
       setStatus(2);
     } else if (time <= 10 && status === 1) {
       timerRef.current.classList.add("lastTen");
-    } 
-    
-    if (time > 0 && status === 1 && cScore?.score < count){
+    }
+
+    if (time > 0 && status === 1 && cScore?.score < count) {
       updateHighScore(scores, count);
     }
   });

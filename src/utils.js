@@ -8,7 +8,7 @@ export const syncEffects = () => {
 
 export const updateHighScore = (lastScores, ccount) => {
   lastScores = lastScores.map((sc) => {
-    if (sc.time == localStorage.getItem("lastTime")) {
+    if (sc.time === localStorage.getItem("lastTime")) {
       sc.score = ccount;
     }
     return sc;
